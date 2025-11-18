@@ -1,110 +1,72 @@
-# ImagePro – Sign Language Interpreter
+# Library Management System
 
-ImagePro is an Android application that recognizes sign-language gestures in real time, converts them into letters/words, and can translate free-form text between 50+ spoken languages. It combines on-device TensorFlow Lite models, OpenCV-powered camera pipelines, and Firebase services (Auth, Firestore, ML Kit, Storage) to provide an end-to-end assistive communication tool.
+This repository contains a console-based Library Management System implemented in Java for the University of Moratuwa. It models a small library where staff or students can add different types of books, borrow and return them, and inspect current inventory—all via a text-based menu.
+
+> The workspace also includes other projects (e.g., an Android sign-language translator). Unless you intend to work on them, focus on the root-level Java files for this Library Management System.
 
 ## Features
-- **Live sign detection:** `CameraActivity` streams camera frames through OpenCV + TensorFlow Lite (`hand_model.tflite`, `sign_language_model.tflite`) to classify gestures and overlay detections.
-- **Word builder:** `LetterCombineActivity` lets users capture letters sequentially, append/clear them, and read the composed word aloud.
-- **Multilingual text translator:** `TranslatorActivity` uses Firebase ML Kit’s on-device translation models plus speech-to-text input for 50+ languages.
-- **Account management:** Firebase Authentication-backed sign-in/sign-up, password reset, and profile drawer content (`LoginActivity`, `RegisterActivity`, `ForgotPasswordActivity`, `SettingsActivity`).
-- **Guides & education:** In-app tutorials and sign-language reference content (`HowToUse`, `AboutSignLanguages`) accessible from the navigation drawer.
+- **Object-oriented book catalog:** `Book` is the base class with shared fields (title, author, ISBN, availability). Specialized subclasses (`FictionBook`, `NonFictionBook`, `HistoricalBook`, `MathematicalBook`, `ProgrammingBook`) demonstrate inheritance.
+- **Library operations:** The `Library` class seeds default books, lets you add more titles by genre, lists available books with type information, and updates availability as books are borrowed or returned.
+- **User management:** `User` objects maintain a unique ID, a user name, and the list of borrowed books. Utility methods track what a patron currently has checked out.
+- **Interactive CLI:** `LibraryManagementSystem__UOM` contains the `main` method with a loop-based menu (options 1–10) covering add/list/borrow/return workflows plus exit handling.
+- **Educational messaging:** Console output introduces library rules, staff members, and general etiquette before the menu loop begins, mirroring a campus experience.
 
-## Project Structure
+## Repository Layout
 ```
 Library-Management-System/
-├─ app/                     # Android application module
-│  ├─ src/main/java/com/example/imagepro/
-│  │   ├─ CameraActivity.java
-│  │   ├─ LetterCombineActivity.java
-│  │   ├─ MainActivity.java
-│  │   └─ activities/...    # Auth, translator, guides
-│  ├─ src/main/assets/      # TensorFlow Lite models + labels
-│  ├─ src/main/jnilibs/     # Prebuilt OpenCV shared libraries
-│  ├─ src/main/res/         # UI layouts, drawables, fonts
-│  └─ build.gradle          # Android + Firebase + ML dependencies
-├─ openCVLibrary3413/       # Imported OpenCV module
-└─ settings.gradle
+├─ LibraryManagementSystem__UOM.java   # Main entry point + all supporting classes
+├─ *.class                             # Precompiled class files (can be regenerated)
+├─ README.md                           # Project documentation
+├─ app/, openCVLibrary3413/            # Unrelated Android project (ignore for CLI)
+└─ ...
 ```
 
-## Tech Stack
-- **Language/SDK:** Android (API 21+), Java 8, Gradle.
-- **Vision & ML:** OpenCV 3.x native libraries, TensorFlow Lite metadata/support/task APIs, custom `.tflite` models bundled under `app/src/main/assets`.
-- **Cloud & Data:** Firebase Authentication, Firestore/Realtime Database (via FirebaseUI), Firebase Storage, Firebase ML Kit Translation.
-- **UI & Utilities:** Material Components, Lottie animations, Glide/Picasso image loading, CircleImageView, Retrofit + Gson (available for REST integrations).
-
 ## Prerequisites
-1. Android Studio Iguana (or newer) with Android SDK 29.
-2. Java 8 toolchain (already configured through Gradle wrapper).
-3. A Firebase project with:
-   - Email/password authentication enabled.
-   - Firestore/Realtime Database rules configured for your needs.
-   - Cloud Storage bucket (for profile images/assets if you plan to use them).
-   - ML Kit translation API enabled (billing may apply for high usage).
-4. `google-services.json` downloaded from Firebase Console and placed inside `app/`.
-5. A device/emulator with camera, microphone, and Google Play Services (physical device strongly recommended for OpenCV camera performance).
+- JDK 8 or later on your machine (`java -version` should succeed).
+- A terminal/command prompt capable of running `javac` and `java`.
 
-## Getting Started
-1. **Clone & open**
+## Quick Start
+1. **Clone the repo**
    ```bash
    git clone <repo-url>
    cd Library-Management-System
    ```
-   Open the project root (`settings.gradle`) in Android Studio; let it sync Gradle dependencies.
+2. **Compile the console app**
+   ```bash
+   javac LibraryManagementSystem__UOM.java
+   ```
+   All helper classes live in the same source file, so a single command produces the necessary `.class` files.
+3. **Run the program**
+   ```bash
+   java LibraryManagementSystem__UOM
+   ```
+   - Enter a user ID and name when prompted.
+   - Use menu options 1–5 to add books of various genres.
+   - Option 6 lists available books.
+   - Options 7 and 8 borrow/return books by ISBN.
+   - Option 9 shows the books currently borrowed by the user.
+   - Option 10 exits the application.
 
-2. **Configure Firebase**
-   - Add your `google-services.json` under `app/`.
-   - Verify the applicationId (`com.example.imagepro`) matches the Firebase Android app package.
-   - Optional: update `res/values/strings.xml` with project-specific messaging (e.g., app name).
+## Customization Ideas
+- Persist the catalog and user data to disk (JSON, CSV, database) instead of keeping everything in memory.
+- Add validation for duplicate ISBNs or enforce maximum borrow limits per user.
+- Track due dates and fines; extend the menu to process late returns automatically.
+- Wrap the core logic in unit tests (e.g., JUnit) to verify borrowing/returning behavior.
+- Replace the CLI with a GUI (Swing/JavaFX) or a REST API while reusing the same domain classes.
 
-3. **Model assets**
-   - The repo includes `hand_model.tflite`, `sign_language_model.tflite`, and `custom_label.txt` in `app/src/main/assets/`. Replace them with retrained models if you need different alphabets/gestures—be sure to keep the same file names or update the constructors in `objectDetectorClass` / `signLanguageClass`.
-
-4. **Run**
-   - From Android Studio: select a device > Run `app`.
-   - Or via CLI:
-     ```bash
-     ./gradlew assembleDebug
-     ./gradlew installDebug
-     ```
-
-## Usage Tips
-- Grant camera, microphone, and storage permissions on first launch to enable OpenCV, speech input, and media features.
-- Use the navigation drawer (hamburger icon) to access the translator, tutorials, or educational content.
-- In the translator, download of language models happens on demand; ensure network connectivity the first time you choose a new language pair.
-
-## Customization
-- **Branding/UI:** Update resources under `app/src/main/res/` (colors, drawables, fonts) and adjust layouts for your UX.
-- **Languages:** Modify the arrays in `TranslatorActivity` to add/remove languages, ensuring `getLanguageCode` maps them to Firebase constants.
-- **Backend:** Extend Firestore/Firebase-UI adapters inside the `activities` package to store user history, favorites, or analytics events.
-- **Models:** Retrain the TensorFlow Lite models with your dataset; keep input sizes consistent (`300` / `96` in constructor calls) or update the code accordingly.
-
-## Testing
-- Instrumented/UI tests live in `app/src/androidTest` and can be executed with:
-  ```bash
-  ./gradlew connectedAndroidTest
-  ```
-- Unit tests reside in `app/src/test` and run with:
-  ```bash
-  ./gradlew testDebugUnitTest
-  ```
-  (Add new tests when extending detection logic, translator flows, or auth flows.)
-
-## Troubleshooting
-- **Gradle sync failures:** Confirm the OpenCV module path `:openCVLibrary3413` exists and is included via `settings.gradle`. Re-import if necessary.
-- **Firebase/ML errors:** Ensure the SHA-1 fingerprint of your signing key is registered in Firebase Console, and that ML Kit is enabled for your project.
-- **Model loading crashes:** Check that the `.tflite` files are uncompressed (handled via `aaptOptions`) and that you haven’t renamed them without updating references.
-- **Camera preview issues:** Physical hardware is required for real-time detection; emulators rarely provide the necessary camera stream/NEON acceleration.
-
-## License
-No explicit license file is provided. Treat the project as “all rights reserved” unless the repository owner specifies otherwise.
+## Known Issues
+- There are a few typos in the source (`userNmae`, `uaer`) that may prevent compilation—rename those identifiers consistently.
+- `User` lacks a no-argument constructor, yet the main program currently calls `new User()`. Either supply one or instantiate with the required name parameter.
+- Input handling assumes valid integers; entering text when a number is expected will throw an exception. Consider wrapping menu reads in try/catch blocks.
 
 ## Contributing
-Contributions are welcome via pull requests. Please:
-1. Branch from `main`.
-2. Run `./gradlew lint testDebugUnitTest`.
-3. Explain the motivation and testing evidence in your PR description.
+1. Fork and branch from `main`.
+2. Make sure the program still compiles/runs via `javac`/`java`.
+3. Document your changes (README updates, comments, or in-code docs as needed).
+4. Open a pull request describing the motivation and testing steps.
+
+## License
+No explicit license is provided; treat this code as “all rights reserved” unless the repository owner states otherwise.
 
 ---
-Maintained as part of a coursework/assistive tech initiative. Feel free to adapt it to your institution or community needs.
-
-#
+_Maintained as part of the University of Moratuwa Library Management System coursework._ #
