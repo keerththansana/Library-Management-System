@@ -2,8 +2,6 @@
 
 This repository contains a console-based Library Management System implemented in Java for the University of Moratuwa. It models a small library where staff or students can add different types of books, borrow and return them, and inspect current inventory—all via a text-based menu.
 
-> The workspace also includes other projects (e.g., an Android sign-language translator). Unless you intend to work on them, focus on the root-level Java files for this Library Management System.
-
 ## Features
 - **Object-oriented book catalog:** `Book` is the base class with shared fields (title, author, ISBN, availability). Specialized subclasses (`FictionBook`, `NonFictionBook`, `HistoricalBook`, `MathematicalBook`, `ProgrammingBook`) demonstrate inheritance.
 - **Library operations:** The `Library` class seeds default books, lets you add more titles by genre, lists available books with type information, and updates availability as books are borrowed or returned.
@@ -70,3 +68,4 @@ No explicit license is provided; treat this code as “all rights reserved” un
 
 ---
 _Maintained as part of the University of Moratuwa Library Management System coursework._ #
+
