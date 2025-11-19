@@ -45,7 +45,39 @@ Library-Management-System/
    - Option 9 shows the books currently borrowed by the user.
    - Option 10 exits the application.
 
-## Customization Ideas
+## Output
+
+![1](https://github.com/user-attachments/assets/542a6354-1a7f-4420-bdd2-af92cb5366aa)
+
+![2](https://github.com/user-attachments/assets/9539f17e-2309-4a2a-a8c8-c64fdea6cd7e)
+
+![3](https://github.com/user-attachments/assets/02f4aa0f-91f5-4a98-b0a6-ced01c4e5d63)
+
+![4](https://github.com/user-attachments/assets/85335a2b-2384-4207-898e-60ef2f43620d)
+
+![5](https://github.com/user-attachments/assets/7a5b4260-465c-4c4c-881e-009928ac1a09)
+
+![6](https://github.com/user-attachments/assets/209ed86d-db99-40cc-bde9-c162a1f50b7e)
+
+![7](https://github.com/user-attachments/assets/e96916e4-20f0-45b5-8f87-9d71a1f6ecbe)
+
+![8](https://github.com/user-attachments/assets/438bf994-bdc0-4921-b613-f39158bbe231)
+
+![9](https://github.com/user-attachments/assets/83c4fc23-1ad2-401e-82d2-a7c1ad1463ef)
+
+![10](https://github.com/user-attachments/assets/2bef2922-f427-40aa-9c02-326d50a33832)
+
+![11](https://github.com/user-attachments/assets/670fb9ec-4b65-41bb-ad60-83a04fe8559c)
+
+![12](https://github.com/user-attachments/assets/aca9e20d-c965-4207-ae0a-6c71fa10fcaa)
+
+![13](https://github.com/user-attachments/assets/52e1d421-4e1c-4257-b073-cb78bb870fc5)
+
+![14](https://github.com/user-attachments/assets/77de3a5d-33a3-4851-b3bf-85ba07b9a622)
+
+
+## Cus![Uploading 2.jpg…]()
+tomization Ideas
 - Persist the catalog and user data to disk (JSON, CSV, database) instead of keeping everything in memory.
 - Add validation for duplicate ISBNs or enforce maximum borrow limits per user.
 - Track due dates and fines; extend the menu to process late returns automatically.
@@ -68,4 +100,5 @@ No explicit license is provided; treat this code as “all rights reserved” un
 
 ---
 _Maintained as part of the University of Moratuwa Library Management System coursework._ #
+
 
