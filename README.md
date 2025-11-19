@@ -76,9 +76,8 @@ Library-Management-System/
 ![14](https://github.com/user-attachments/assets/77de3a5d-33a3-4851-b3bf-85ba07b9a622)
 
 
-## Cus![Uploading 2.jpg…]()
-tomization Ideas
-- Persist the catalog and user data to disk (JSON, CSV, database) instead of keeping everything in memory.
+## Customisation Ideas
+- Persist the catalogue and user data to disk (JSON, CSV, database) instead of keeping everything in memory.
 - Add validation for duplicate ISBNs or enforce maximum borrow limits per user.
 - Track due dates and fines; extend the menu to process late returns automatically.
 - Wrap the core logic in unit tests (e.g., JUnit) to verify borrowing/returning behavior.
@@ -100,5 +99,6 @@ No explicit license is provided; treat this code as “all rights reserved” un
 
 ---
 _Maintained as part of the University of Moratuwa Library Management System coursework._ #
+
 
 
